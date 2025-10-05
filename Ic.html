@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zapier + HubSpot – Initial Connection Automation</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #f9fafb;
+    --text: #1f2937;
+    --sub: #6b7280;
+    --border: #e5e7eb;
+    --accent: #0ea5e9;
+    --accent-2: #7c3aed;
+    --danger: #dc2626;
+    --list: #0284c7;
+    --mail: #9333ea;
+    --form: #f43f5e;
+    --zap: #f59e0b;
+    --stage: #059669;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1300px; margin: 0 auto; padding: 40px 24px 96px; }
+  header { text-align: center; margin-bottom: 50px; }
+  h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 8px; }
+  .tag { color: var(--sub); font-size: 14px; letter-spacing: 1px; }
+
+  section.card { border: 1px solid var(--border); border-radius: 12px; padding: 28px 32px; box-shadow: var(--shadow); background: var(--card); margin-bottom: 28px; }
+  section.card h2 { color: var(--accent); margin: 0 0 16px; }
+
+  .flow { border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: var(--shadow); background: var(--card); }
+  .flow h2 { color: var(--accent); margin-bottom: 25px; }
+  .lane { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 16px; padding-bottom: 8px; }
+  .node { flex: 0 0 280px; background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .node:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .node h4 { margin: 0 0 8px; font-size: 15px; color: var(--zap); }
+  .node ul { margin: 6px 0 0 18px; color: #374151; font-size: 13px; }
+  .arrow { display: grid; place-items: center; min-width: 34px; }
+  .arrow svg { stroke: var(--accent); opacity: 0.9; }
+
+  .keys-wrap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .key { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: transform .25s ease, box-shadow .25s ease; }
+  .key:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+  .key h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+  .key p { margin: 0; font-size: 12px; color: #374151; line-height: 1.55; }
+  .key.z h3 { color: var(--zap); }
+  .key.l h3 { color: var(--list); }
+  .key.m h3 { color: var(--mail); }
+  .key.f h3 { color: var(--form); }
+  .key.s h3 { color: var(--stage); }
+
+  .desc-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .zap-block { background: #fff; border-left: 4px solid var(--zap); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .zap-block strong { color: var(--zap); }
+  .summary { background: #f8fafc; border-left: 4px solid var(--accent-2); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .summary strong { color: var(--accent-2); }
+
+  .footer { text-align: center; color: var(--sub); font-size: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Zapier + HubSpot — Initial Connection Automation</h1>
+      <div class="tag">Elyvia LLC • Professional Workflow Presentation</div>
+    </header>
+
+    <section class="card">
+      <h2>Automation Objective</h2>
+      <p>Automate the onboarding journey for cold leads using Zapier + HubSpot — create deals, send structured follow-ups (M1 → M3 via forms F1 → F3), and mark unresponsive deals as <span style="color:var(--danger)">Lost</span> after staged 4-day checks.</p>
+    </section>
+
+    <section class="flow">
+      <h2>Automation Flow Overview</h2>
+      <div class="lane">
+        <div class="node"><h4>Z1 – Deal Creation</h4><ul><li>Trigger: Contact enters <span style='color:var(--list)'>L0</span></li><li>If Company exists → CompanyName_NewDeal else ContactName_TLA_NewDeal</li><li>Create Deal, associate Contact/Company/Orders</li><li>Output: <span style='color:var(--stage)'>S1</span></li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z2 – Initial Connect (M1)</h4><ul><li>Trigger: Deal enters <span style='color:var(--stage)'>S1</span></li><li>Submit <span style='color:var(--form)'>F1</span> → triggers <span style='color:var(--mail)'>M1</span></li><li>Add to <span style='color:var(--list)'>L1</span> (exclude buyers → <span style='color:var(--list)'>L2</span>)</li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z3 – 4-Day Check</h4><ul><li>Wait 4 days</li><li>If still in <span style='color:var(--list)'>L1</span> → move to <span style='color:var(--stage)'>S2</span></li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z4 – Second Touch (M2)</h4><ul><li>Trigger: Deal enters <span style='color:var(--stage)'>S2</span></li><li>Submit <span style='color:var(--form)'>F2</span> → triggers <span style='color:var(--mail)'>M2</span></li><li>Add to <span style='color:var(--list)'>L3</span></li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z5 – 4-Day Recheck</h4><ul><li>Wait 4 days</li><li>If still in <span style='color:var(--list)'>L3</span> → move to <span style='color:var(--stage)'>S3</span></li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z6 – Third Touch (M3)</h4><ul><li>Trigger: Deal enters <span style='color:var(--stage)'>S3</span></li><li>Submit <span style='color:var(--form)'>F3</span> → triggers <span style='color:var(--mail)'>M3</span></li><li>Add to <span style='color:var(--list)'>L4</span></li></ul></div>
+        <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+        <div class="node"><h4>Z7 – Final Lost Check</h4><ul><li>Wait 4 days</li><li>If still in <span style='color:var(--list)'>L4</span> → mark <span style='color:var(--danger)'>Lost ❌</span></li></ul></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Master Key Reference</h2>
+      <div class="keys-wrap">
+        <div class="key z"><h3>⚡ Zaps (Z)</h3><p>Z1: Deal Creator<br>Z2: Initial Connect<br>Z3: 4-Day Check<br>Z4: Second Touch<br>Z5: 4-Day Recheck<br>Z6: Third Touch<br>Z7: Lost Check</p></div>
+        <div class="key l"><h3>📋 Lists (L)</h3><p>L0: Start – Cold Leads<br>L1: Break the Ice<br>L2: Active Buyers<br>L3: Reminder (Email 2)<br>L4: Last Chance (Email 3)</p></div>
+        <div class="key m"><h3>✉️ Emails (M)</h3><p>M1: Break the Ice<br>M2: Reminder<br>M3: Last Chance</p></div>
+        <div class="key f"><h3>🧾 Forms (F)</h3><p>F1: Break the Ice<br>F2: Reminder<br>F3: Last Chance</p></div>
+        <div class="key s"><h3>🧩 Stages (S)</h3><p>S1: Break the Ice<br>S2: Reminder<br>S3: Last Chance</p></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Detailed Automation Description</h2>
+      <div class="desc-grid">
+        <div class="zap-block"><strong>Zap 1 – Deal Creation (Entry Point):</strong> Triggered when a new contact enters list <span style='color:var(--list)'>L0</span>. If the contact has an associated company, the deal name becomes CompanyName_NewDeal; otherwise ContactName_TLA_NewDeal. The deal is created and associated with the contact, company, and any linked orders. Output: <span style='color:var(--stage)'>S1</span>.</div>
+        <div class="zap-block"><strong>Zap 2 – Initial Connect (M1):</strong> Triggered when a deal enters <span style='color:var(--stage)'>S1</span>. Retrieves contact info, submits <span style='color:var(--form)'>F1</span>, and triggers <span style='color:var(--mail)'>M1</span>. Adds contact to <span style='color:var(--list)'>L1</span> (excluding those with existing orders → <span style='color:var(--list)'>L2</span>).</div>
+        <div class="zap-block"><strong>Zap 3 – 4-Day Follow-Up Check (Post M1):</strong> Waits 4 days; if contact remains in <span style='color:var(--list)'>L1</span> (inactive), updates deal stage to <span style='color:var(--stage)'>S2</span>.</div>
+        <div class="zap-block"><strong>Zap 4 – Second Touchpoint (M2):</strong> Triggered when a deal enters <span style='color:var(--stage)'>S2</span>. Submits <span style='color:var(--form)'>F2</span> to send <span style='color:var(--mail)'>M2</span> and adds the contact to <span style='color:var(--list)'>L3</span>.</div>
+        <div class="zap-block"><strong>Zap 5 – 4-Day Recheck (Post M2):</strong> Waits 4 days; if contact remains inactive in <span style='color:var(--list)'>L3</span>, moves the deal to <span style='color:var(--stage)'>S3</span>.</div>
+        <div class="zap-block"><strong>Zap 6 – Third Touchpoint (M3):</strong> Triggered when a deal enters <span style='color:var(--stage)'>S3</span>. Submits <span style='color:var(--form)'>F3</span>, which triggers <span style='color:var(--mail)'>M3</span>, and adds the contact to <span style='color:var(--list)'>L4</span>.</div>
+        <div class="zap-block"><strong>Zap 7 – Final 4-Day Lost Check (Post M3):</strong> Waits 4 days; if the contact remains in <span style='color:var(--list)'>L4</span> without engagement or orders, updates the deal stage to <span style='color:var(--danger)'>Lost ❌</span>.</div>
+        <div class="summary"><strong>Summary of the Journey:</strong> Z1 creates a Deal; Z2 sends M1 and updates Lists; Z3 checks after 4 days; Z4 sends M2; Z5 rechecks inactivity; Z6 sends M3; Z7 marks the Deal as Lost if no engagement occurs.</div>
+      </div>
+    </section>
+
+    <div class="footer">© 2025 Elyvia LLC • Zapier + HubSpot – Professional Workflow Presentation</div>
+  </div>
+</body>
+</html>

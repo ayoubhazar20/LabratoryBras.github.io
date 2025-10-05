@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Additional Zaps – 90-Day Reminder & 365-Day Inactivity</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --card: #f9fafb;
+  --text: #1f2937;
+  --sub: #6b7280;
+  --border: #e5e7eb;
+  --accent: #0ea5e9;
+  --zap: #f59e0b;
+  --form: #f43f5e;
+  --stage: #059669;
+  --list: #22d3ee;
+  --mail: #a78bfa;
+  --danger: #ef4444;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container { max-width: 1300px; margin: 0 auto; padding: 40px 24px 96px; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 8px; }
+.tag { color: var(--sub); font-size: 14px; letter-spacing: 1px; }
+
+section.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  margin-bottom: 28px;
+}
+section.card h2 { color: var(--accent); margin: 0 0 16px; }
+
+/* Flow */
+.flow {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  padding: 24px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.flow h3 {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--accent);
+  font-size: 18px;
+  z-index: 10;
+}
+.lane {
+  display: flex;
+  gap: 16px;
+  min-width: 1100px;
+  padding: 20px 0;
+}
+.node {
+  flex: 0 0 260px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.node:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.node h4 { margin: 0 0 8px; font-size: 15px; }
+.node ul { margin: 0 0 0 18px; padding: 0; list-style: disc; color: #374151; font-size: 13px; }
+.node.zap h4 { color: var(--zap); }
+.node.form h4 { color: var(--form); }
+.node.mail h4 { color: var(--mail); }
+.node.list h4 { color: var(--list); }
+.node.stage h4 { color: var(--stage); }
+.arrow { display: grid; place-items: center; min-width: 34px; flex: 0 0 34px; }
+.arrow svg { stroke: var(--accent); opacity: 0.9; }
+
+/* Keys */
+.keys-wrap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.key { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+.key h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+.key p { margin: 0; font-size: 12px; color: #374151; line-height: 1.55; }
+.key.z h3 { color: var(--zap); }
+.key.l h3 { color: var(--list); }
+.key.f h3 { color: var(--form); }
+.key.m h3 { color: var(--mail); }
+.key.s h3 { color: var(--stage); }
+
+/* Description */
+.desc-grid { display: grid; gap: 12px; }
+.zap-block { background: #fff; border-left: 4px solid var(--zap); border-radius: 10px; padding: 14px 16px; }
+.zap-block strong { color: var(--zap); }
+.summary { background: #fff; border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; }
+.summary strong { color: var(--accent); }
+
+.divider {
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--accent), transparent);
+  margin: 40px 0;
+  border-radius: 2px;
+}
+
+.footer {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Additional Zaps – 90-Day Reminder & 365-Day Inactivity</h1>
+    <div class="tag">Elyvia LLC • Automated Retention & Re-Engagement Workflows</div>
+  </header>
+
+  <!-- Zap 1 (90 Days) -->
+  <section class="card">
+    <h2>Zap 1 – 90-Day Pre-Order Reminder</h2>
+    <p>This workflow targets customers inactive for 90 days, reminding them to reorder and maintaining regular engagement.</p>
+  </section>
+
+  <section class="flow">
+    <h3>⚡ Flow – 90-Day Reminder</h3>
+    <div class="lane">
+      <div class="node list">
+        <h4>L1 – Reorder Candidates</h4>
+        <ul>
+          <li>Trigger: Contact added to L1 (90-day inactivity).</li>
+          <li>L1 Definition: Last order ≥ 90 days.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z1 – 90-Day Reorder Email</h4>
+        <ul>
+          <li>Runs when added to L1.</li>
+          <li>Submits F1 → triggers M1.</li>
+          <li>Sends Reorder Reminder automatically.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node mail">
+        <h4>M1 – Reorder Reminder</h4>
+        <ul><li>Email encouraging the client to place a new order.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>Master Key Reference – 90-Day Reminder</h3>
+    <div class="keys-wrap">
+      <div class="key l"><h3>📋 Lists (L)</h3><p>L1: ZP – Reorder Candidates (90 Days)</p></div>
+      <div class="key z"><h3>⚡ Zap (Z)</h3><p>Z1: ZP – 90 Days Reorder Email</p></div>
+      <div class="key f"><h3>🧾 Form (F)</h3><p>F1: ZP – 90 Days Reorder Email</p></div>
+      <div class="key m"><h3>✉️ Email (M)</h3><p>M1: ZP – 90 Days Reorder Email</p></div>
+      <div class="key s"><h3>🧩 Stage (S)</h3><p>–</p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="desc-grid">
+      <div class="zap-block"><strong>Zap 1 – 90-Day Reminder Logic:</strong> When a customer is inactive for ≥90 days, the system adds them to L1. Zap 1 triggers, submits Form F1, and automatically sends Email M1 to encourage reordering.</div>
+      <div class="summary"><strong>Outcome:</strong> Keeps the client engaged and promotes steady order cycles every 3 months.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Zap 2 (365 Days) -->
+  <section class="card">
+    <h2>Zap 1 – 365-Day Long Inactivity (Lost Pipeline)</h2>
+    <p>This automation identifies long-term dormant clients (≥1 year) and performs one final re-engagement attempt before marking deals as lost.</p>
+  </section>
+
+  <section class="flow">
+    <h3>⚡ Flow – 365-Day Inactivity</h3>
+    <div class="lane">
+      <div class="node list">
+        <h4>L1 – Dormant Customers</h4>
+        <ul>
+          <li>Trigger: Contact added to L1 (365-day inactivity).</li>
+          <li>L1 Definition: Last order ≥ 365 days.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z1 – 365-Day Follow-Up Email</h4>
+        <ul>
+          <li>Runs on entry to L1.</li>
+          <li>Submits F1 → triggers M1.</li>
+          <li>Waits 30 days → rechecks inactivity.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node stage">
+        <h4>S – Lost Closure</h4>
+        <ul><li>If still inactive (≥365 days) → Update Deal Stage → <span style="color:var(--danger)">Lost ❌</span>.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>Master Key Reference – 365-Day Inactivity</h3>
+    <div class="keys-wrap">
+      <div class="key l"><h3>📋 List (L)</h3><p>L1: ZP – Dormant Customers (365 Days)</p></div>
+      <div class="key z"><h3>⚡ Zap (Z)</h3><p>Z1: ZP – 365 Days Follow-Up Email Before Closing</p></div>
+      <div class="key f"><h3>🧾 Form (F)</h3><p>F1: ZP – 365 Days Follow-Up Email Before Closing</p></div>
+      <div class="key m"><h3>✉️ Email (M)</h3><p>M1: ZP – 365 Days Follow-Up Email Before Closing</p></div>
+      <div class="key s"><h3>🧩 Stage (S)</h3><p>S: Lost Closure</p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="desc-grid">
+      <div class="zap-block"><strong>Zap 1 – 365-Day Inactivity Logic:</strong> When a customer is inactive for ≥365 days, they enter L1. Zap 1 sends a final re-engagement email (M1). If after 30 days no order occurs, the deal is marked Lost.</div>
+      <div class="summary"><strong>Outcome:</strong> Automates pipeline hygiene by identifying and closing long-term inactive deals after one last attempt to re-engage.</div>
+    </div>
+  </section>
+
+  <div class="footer">© 2025 Elyvia LLC • Additional Zaps – 90-Day Reminder & 365-Day Inactivity</div>
+</div>
+</body>
+</html>
+

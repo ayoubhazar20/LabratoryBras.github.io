@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zapier + HubSpot Flow – Regular Order (Won Customer)</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --card: #f9fafb;
+  --text: #1f2937;
+  --sub: #6b7280;
+  --border: #e5e7eb;
+  --accent: #0ea5e9;
+  --zap: #f59e0b;
+  --list: #22d3ee;
+  --stage: #059669;
+  --danger: #ef4444;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container { max-width: 1250px; margin: 0 auto; padding: 40px 24px 96px; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 8px; }
+.tag { color: var(--sub); font-size: 14px; letter-spacing: 1px; }
+
+section.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  margin-bottom: 28px;
+}
+section.card h2 { color: var(--accent); margin: 0 0 16px; }
+
+/* Flow */
+.flow {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  padding: 24px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.flow h3 {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--accent);
+  font-size: 18px;
+  z-index: 10;
+}
+.lane {
+  display: flex;
+  gap: 16px;
+  min-width: 1100px;
+  padding: 20px 0;
+}
+.node {
+  flex: 0 0 260px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.node:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.node h4 { margin: 0 0 8px; font-size: 15px; }
+.node ul { margin: 0 0 0 18px; padding: 0; list-style: disc; color: #374151; font-size: 13px; }
+.node.zap h4 { color: var(--zap); }
+.node.list h4 { color: var(--list); }
+.node.stage h4 { color: var(--stage); }
+.node.decision { border-left: 4px solid var(--accent); }
+.arrow { display: grid; place-items: center; min-width: 34px; flex: 0 0 34px; }
+.arrow svg { stroke: var(--accent); opacity: 0.9; }
+
+/* Keys */
+.keys-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.key { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+.key h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+.key p { margin: 0; font-size: 12px; color: #374151; line-height: 1.55; }
+.key.z h3 { color: var(--zap); }
+.key.l h3 { color: var(--list); }
+.key.s h3 { color: var(--stage); }
+
+/* Description */
+.desc-grid { display: grid; gap: 12px; }
+.zap-block { background: #fff; border-left: 4px solid var(--zap); border-radius: 10px; padding: 14px 16px; }
+.zap-block strong { color: var(--zap); }
+.summary { background: #fff; border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; }
+.summary strong { color: var(--accent); }
+
+.footer {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Zapier + HubSpot Flow – Regular Order (Won Customer)</h1>
+    <div class="tag">Elyvia LLC • Automated Deal Conversion Triggered by Order Creation</div>
+  </header>
+
+  <section class="card">
+    <h2>Automation Objective</h2>
+    <p>When a new <strong>Order</strong> is created in HubSpot (synced from Shopify), this automation checks whether it’s a <strong>Regular Order</strong> or a <strong>Sample Order</strong>.  
+    If the order is regular, the Deal is automatically moved to <span style="color:var(--stage)">Stage S1 – Customer Won</span>, and a confirmation note is added.  
+    This ensures real-time pipeline updates based on actual purchases.</p>
+  </section>
+
+  <!-- Flow -->
+  <section class="flow">
+    <h3>⚡ Flow Overview – Real-Time Regular Order Conversion</h3>
+    <div class="lane">
+      <div class="node zap">
+        <h4>Trigger: HubSpot Order Created</h4>
+        <ul><li>Source: Shopify → HubSpot Sync.</li><li>Every time a new order is created in HubSpot.</li></ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node decision">
+        <h4>Check Order Type</h4>
+        <ul>
+          <li>If <strong>order_type = Regular order</strong> → Continue</li>
+          <li>If <strong>order_type = Sample</strong> → Stop (handled by sample flow)</li>
+        </ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z1 </h4>
+        <ul>
+          <li>Action 1: Update Deal Stage → <span style="color:var(--stage)">S1</span></li>
+          <li>Action 2: Create Note → “Customer placed regular order – Deal marked as Won.”</li>
+        </ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node list">
+        <h4>L1 </h4>
+        <ul><li>Optional list inclusion for reporting & future segmentation.</li><li>Helps identify all won customers.</li></ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node stage">
+        <h4>S1 </h4>
+        <ul><li>Deal marked as “Won.”</li><li>Visible in pipeline analytics.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keys -->
+  <section class="card">
+    <h2>Master Key Reference</h2>
+    <div class="keys-wrap">
+      <div class="key z"><h3>⚡ Zap (Z)</h3><p>Z1: ZP – Regular Order Placed → Customer Won</p></div>
+      <div class="key l"><h3>📋 List (L)</h3><p>L1: ZP – Client with at Least a Real Order</p></div>
+      <div class="key s"><h3>🧩 Stage (S)</h3><p>S1: Customer Won</p></div>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="card">
+    <h2>Detailed Automation Description</h2>
+    <div class="desc-grid">
+      <div class="zap-block">
+        <strong>Trigger:</strong> Every time a new order is created in HubSpot, the Zap retrieves the <code>order_type</code> property and evaluates it.
+      </div>
+      <div class="zap-block">
+        <strong>Decision Logic:</strong> If <code>order_type = Regular order</code>, the Zap continues; if it equals <code>Sample</code>, it stops (handled by the “Sample-Only Orders” automation).
+      </div>
+      <div class="zap-block">
+        <strong>Z1 – Regular Order → Customer Won:</strong> Updates the Deal Stage to <span style="color:var(--stage)">S1</span> and adds a note confirming successful conversion.
+      </div>
+      <div class="zap-block">
+        <strong>List Inclusion:</strong> Optionally, the contact is added to <span style="color:var(--list)">L1</span> for future marketing and reporting segmentation.
+      </div>
+      <div class="summary">
+        <strong>Outcome:</strong> The automation ensures that each regular order instantly updates HubSpot’s pipeline, marking the deal as “Won Customer” only when the order type is valid, maintaining perfect data integrity.
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© 2025 Elyvia LLC • Zapier + HubSpot Flow – Regular Order (Won Customer)</div>
+</div>
+</body>
+</html>

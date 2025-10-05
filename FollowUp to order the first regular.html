@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zapier + HubSpot Flow – Sample-Only Orders</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --card: #f9fafb;
+  --text: #1f2937;
+  --sub: #6b7280;
+  --border: #e5e7eb;
+  --accent: #0ea5e9;
+  --zap: #f59e0b;
+  --form: #f43f5e;
+  --stage: #059669;
+  --list: #22d3ee;
+  --mail: #a78bfa;
+  --danger: #ef4444;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container { max-width: 1300px; margin: 0 auto; padding: 40px 24px 96px; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 8px; }
+.tag { color: var(--sub); font-size: 14px; letter-spacing: 1px; }
+
+section.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  margin-bottom: 28px;
+}
+section.card h2 { color: var(--accent); margin: 0 0 16px; }
+
+/* Flow */
+.flow {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  padding: 24px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.flow h3 {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--accent);
+  font-size: 18px;
+  z-index: 10;
+}
+.lane {
+  display: flex;
+  gap: 16px;
+  min-width: 1200px;
+  padding: 20px 0;
+}
+.node {
+  flex: 0 0 260px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.node:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.node h4 { margin: 0 0 8px; font-size: 15px; }
+.node ul { margin: 0 0 0 18px; padding: 0; list-style: disc; color: #374151; font-size: 13px; }
+.node.zap h4 { color: var(--zap); }
+.node.form h4 { color: var(--form); }
+.node.mail h4 { color: var(--mail); }
+.node.list h4 { color: var(--list); }
+.node.stage h4 { color: var(--stage); }
+.arrow { display: grid; place-items: center; min-width: 34px; flex: 0 0 34px; }
+.arrow svg { stroke: var(--accent); opacity: 0.9; }
+
+/* Keys */
+.keys-wrap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.key { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+.key h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+.key p { margin: 0; font-size: 12px; color: #374151; line-height: 1.55; }
+.key.z h3 { color: var(--zap); }
+.key.l h3 { color: var(--list); }
+.key.f h3 { color: var(--form); }
+.key.m h3 { color: var(--mail); }
+.key.s h3 { color: var(--stage); }
+
+/* Description */
+.desc-grid { display: grid; gap: 12px; }
+.zap-block { background: #fff; border-left: 4px solid var(--zap); border-radius: 10px; padding: 14px 16px; }
+.zap-block strong { color: var(--zap); }
+.summary { background: #fff; border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; }
+.summary strong { color: var(--accent); }
+
+.footer {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Zapier + HubSpot Flow – Sample-Only Orders</h1>
+    <div class="tag">Elyvia LLC • Automated Nurturing from Samples to Real Orders</div>
+  </header>
+
+  <section class="card">
+    <h2>Automation Objective</h2>
+    <p>This automation nurtures contacts who have placed only <strong>sample orders</strong> in Shopify. Through four Zaps, the system gradually follows up and transitions them toward making a full purchase, closing the deal if no conversion occurs. Color references: <span style="color:var(--zap)">Z</span>, <span style="color:var(--form)">F</span>, <span style="color:var(--mail)">M</span>, <span style="color:var(--stage)">S</span>, <span style="color:var(--list)">L</span>.</p>
+  </section>
+
+  <!-- Flow -->
+  <section class="flow">
+    <h3>⚡ Flow Overview – From Sample to First Order</h3>
+    <div class="lane">
+  
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z1 </h4>
+        <ul><li>Trigger: Contact is added to L1.
+          <li>Definition L1: List contact with Only sample orders, no regular orders.</li>
+        </li><li>Actions: Update Deal Stage → S1; create Note.</li><li>Outcome: Marks the Deal for follow-up.</li></ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z2 </h4>
+        <ul><li>Trigger: Deal enters S1.</li><li>Wait 7 days; if still in L1 → Move Deal → S2.</li></ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z3 </h4>
+        <ul><li>Trigger: Deal enters S2.</li><li>Submit F4 → Send M4 (Reminder).</li><li>Wait 35 days → if still in L1 → Move → S3.</li></ul>
+      </div>
+
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z4 </h4>
+        <ul><li>Trigger: Deal enters S3.</li><li>Submit F5 → Send M5 (Final Reminder).</li><li>Wait 20 days → If still in L1 → Move → S4 (Closed/Lost).</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keys -->
+  <section class="card">
+    <h2>Master Key Reference</h2>
+    <div class="keys-wrap">
+      <div class="key l"><h3>📋 List (L)</h3><p>L1: ZP – Contact with Only Samples</p></div>
+      <div class="key z"><h3>⚡ Zaps (Z)</h3><p>Z1: ZP – List Contact with Only Sample → 1/4 Make a Real Order<br>Z2: ZP – 1/2 Follow-Up After 7 Days → 2/4 Make a Real Order<br>Z3: ZP – 2/2 & 1/2 Follow-Up After 7 & 35 Days → 2/4 & 3/4 Make a Real Order<br>Z4: ZP – 2/2 & 2/2 Follow-Up After 7 & 35 Days → 3/4 & 4/4 Make a Real Order</p></div>
+      <div class="key f"><h3>🧾 Forms (F)</h3><p>F4: ZP – Follow-Up Email 2/2 : From Sample to First Order<br>F5: ZP – Follow-Up Form → Last Reminder 2/2 : From Sample to First Order</p></div>
+      <div class="key m"><h3>✉️ Emails (M)</h3><p>M4: ZP – Follow-Up Email 1/2 : From Sample to First Order<br>M5: ZP – Follow-Up Email → Last Reminder 1/2 : From Sample to First Order</p></div>
+      <div class="key s"><h3>🧩 Stages (S)</h3><p>S1: Sample Sent<br>S2: Sample Follow-Up<br>S3: Final Follow-Up Reminder<br>S4: Lead Closure</p></div>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section class="card">
+    <h2>Detailed Automation Description</h2>
+    <div class="desc-grid">
+      <div class="zap-block"><strong>Z1 – Stage Update (S1):</strong> Triggered when a contact is added to L1. The deal stage is updated to S1 (“Sample Sent”), and a note is added confirming the contact has only ordered a sample.</div>
+      <div class="zap-block"><strong>Z2 – 7-Day Check (S2):</strong> Triggered when the deal enters S1. Waits 7 days, then checks if the contact remains in L1. If yes → moves the deal to S2 (“Sample Follow-Up”).</div>
+      <div class="zap-block"><strong>Z3 – 35-Day Reminder (S3):</strong> Triggered when the deal enters S2. Submits F4 → sends M4 (Follow-Up Email 1/2). Waits 35 days; if still in L1 → moves the deal to S3 (“Final Follow-Up Reminder”).</div>
+      <div class="zap-block"><strong>Z4 – Final Reminder + Lost (S4):</strong> Triggered when the deal enters S3. Submits F5 → sends M5 (Last Reminder). Waits 20 days; if still in L1 → moves the deal to S4 (“Lead Closure ❌”).</div>
+      <div class="summary"><strong>Schema Overview:</strong> Each stage transition is fully automated. The flow gradually nudges “Sample-Only” customers toward conversion while automatically closing lost leads after the final reminder.</div>
+    </div>
+  </section>
+
+  <div class="footer">© 2025 Elyvia LLC• Zapier + HubSpot Flow – Sample-Only Orders</div>
+</div>
+</body>
+</html>

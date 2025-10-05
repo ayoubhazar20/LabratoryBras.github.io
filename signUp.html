@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website & Shopify Sign-Up Automation Flow</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --card: #f9fafb;
+  --text: #1f2937;
+  --sub: #6b7280;
+  --border: #e5e7eb;
+  --accent: #0ea5e9;
+  --zap: #f59e0b;
+  --form: #f43f5e;
+  --stage: #059669;
+  --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container { max-width: 1300px; margin: 0 auto; padding: 40px 24px 96px; }
+header { text-align: center; margin-bottom: 50px; }
+h1 { font-size: 2.2rem; color: var(--accent); margin-bottom: 8px; }
+.tag { color: var(--sub); font-size: 14px; letter-spacing: 1px; }
+
+section.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  margin-bottom: 28px;
+}
+section.card h2 { color: var(--accent); margin: 0 0 16px; }
+
+/* Flow Style */
+.flow {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  padding: 24px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.flow h3 {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  color: var(--accent);
+  font-size: 18px;
+  z-index: 10;
+}
+.lane {
+  display: flex;
+  gap: 16px;
+  min-width: 1100px;
+  padding: 20px 0;
+}
+.node {
+  flex: 0 0 260px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.node:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.node h4 { margin: 0 0 8px; font-size: 15px; }
+.node ul { margin: 0 0 0 18px; padding: 0; list-style: disc; color: #374151; font-size: 13px; }
+.node.zap h4 { color: var(--zap); }
+.node.form h4 { color: var(--form); }
+.node.stage h4 { color: var(--stage); }
+.arrow { display: grid; place-items: center; min-width: 34px; flex: 0 0 34px; }
+.arrow svg { stroke: var(--accent); opacity: 0.9; }
+
+/* Keys Grid */
+.keys-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.key { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--shadow); }
+.key h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .6px; }
+.key p { margin: 0; font-size: 12px; color: #374151; line-height: 1.55; }
+.key.z h3 { color: var(--zap); }
+.key.f h3 { color: var(--form); }
+.key.s h3 { color: var(--stage); }
+
+/* Description */
+.desc-grid { display: grid; gap: 12px; }
+.zap-block { background: #fff; border-left: 4px solid var(--zap); border-radius: 10px; padding: 14px 16px; }
+.zap-block strong { color: var(--zap); }
+.summary { background: #fff; border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; }
+.summary strong { color: var(--accent); }
+
+.footer {
+  text-align: center;
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 40px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Website & Shopify Sign-Up Automation Flow</h1>
+    <div class="tag">Elyvia LLC • Professional Workflow Presentation</div>
+  </header>
+
+  <!-- Objective -->
+  <section class="card">
+    <h2>Automation Objective</h2>
+    <p>Automate and synchronize website and Shopify sign-ups through Zapier and HubSpot. Ensure seamless contact, deal, and stage updates based on activation. Color references: <span style="color:var(--zap)">Z</span> (Zap), <span style="color:var(--form)">F</span> (Form), <span style="color:var(--stage)">S</span> (Stage).</p>
+  </section>
+
+  <!-- Flow Path 1 -->
+  <section class="flow">
+    <h3>Path 1 – Website Form Sign-Up (F1)</h3>
+    <div class="lane">
+      <div class="node form">
+        <h4>F1 – Website Form</h4>
+        <ul>
+          <li>Trigger: User signs up through Form F1 on the website.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z1 – Shopify Customer Creation</h4>
+        <ul>
+          <li>Check in Shopify if the customer already exists.</li>
+          <li>If not → Create in Shopify with tags: NET 60, VIP.</li>
+          <li>Move pipeline step to <span style="color:var(--stage)">S1</span>.</li>
+          <li>Shopify automatically sends an account activation email.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z2 – Account Activation</h4>
+        <ul>
+          <li>If the customer activates their account → Update Deal Stage → <span style="color:var(--stage)">S2</span> in HubSpot.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flow Path 2 -->
+  <section class="flow">
+    <h3>Path 2 – Shopify Native Account Creation</h3>
+    <div class="lane">
+      <div class="node zap">
+        <h4>Shopify Sign-Up</h4>
+        <ul>
+          <li>Trigger: User signs up directly through Shopify's native account creation.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node form">
+        <h4>Shopify → HubSpot Sync</h4>
+        <ul>
+          <li>Synchronization creates a HubSpot Contact automatically.</li>
+          <li>No Deal exists yet.</li>
+        </ul>
+      </div>
+      <div class="arrow"><svg width="24" height="24"><path d="M5 12h14M13 5l7 7-7 7"/></svg></div>
+      <div class="node zap">
+        <h4>Z2 – Activation Sync</h4>
+        <ul>
+          <li>Once the account is activated → Create a Deal in HubSpot.</li>
+          <li>Deal immediately moves to <span style="color:var(--stage)">S2</span>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Reference -->
+  <section class="card">
+    <h2>Master Key Reference</h2>
+    <div class="keys-wrap">
+      <div class="key f"><h3>🧾 Forms (F)</h3><p>F1: ZP - Subscription Form</p></div>
+      <div class="key z"><h3>⚡ Zaps (Z)</h3><p>Z1: Signup Completed – HubSpot Form<br>Z2: Account Enabled / Activated</p></div>
+      <div class="key s"><h3>🧩 Stages (S)</h3><p>S1: Signup Completed – Account Pending<br>S2: Account Activated</p></div>
+    </div>
+  </section>
+
+  <!-- Detailed Description -->
+  <section class="card">
+    <h2>Detailed Automation Description</h2>
+    <div class="desc-grid">
+      <div class="zap-block"><strong>Path 1 – Website Form Sign-Up (F1):</strong> User submits Form F1 on the website. <span style="color:var(--zap)">Z1</span> checks Shopify for an existing customer. If none exists, a new customer is created with “NET 60” and “VIP” tags, pipeline moves to <span style="color:var(--stage)">S1</span>, and Shopify sends an activation email. Then <span style="color:var(--zap)">Z2</span> updates the Deal Stage to <span style="color:var(--stage)">S2</span> once the user activates their account.</div>
+      <div class="zap-block"><strong>Path 2 – Shopify Native Account Creation:</strong> User creates an account directly through Shopify. Sync automatically adds a HubSpot Contact (no Deal yet). Upon activation, <span style="color:var(--zap)">Z2</span> creates a Deal in HubSpot and immediately moves it to <span style="color:var(--stage)">S2</span>.</div>
+      <div class="summary"><strong>Schema Overview:</strong> This setup manages both website and native sign-ups, aligns Shopify and HubSpot data, and ensures Deal progression reflects activation status across both entry paths.</div>
+    </div>
+  </section>
+
+  <div class="footer">© 2025 Elyvia LLC • Website & Shopify Sign-Up Automation Flow</div>
+</div>
+</body>
+</html>
