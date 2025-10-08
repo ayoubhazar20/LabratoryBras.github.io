@@ -3,77 +3,74 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Formulaire HubSpot – Auto Remplissage Vérifié</title>
+  <title>Formulairdsde HubSpot – Auto-remplissage lien_residence</title>
 
-  <!-- HubSpot official embed -->
-  <script src="https://js.hsforms.net/forms/v2.js"></script>
+  <!-- Load HubSpot Forms v2 library -->
+<script charset="utf-8" type="text/javascript" src="https://js.hsforms.net/forms/embed/v2.js"></script>
 </head>
 
 <body>
   <h1>Contact</h1>
-  <p>Le champ <code>lien_residence</code> sera automatiquement rempli avec l’URL de cette page.</p>
+  <p>Le champ <code>lien_residence</code> sera automatiquement rempli avec l’URL actuelle de cette page.</p>
 
-  <!-- HubSpot form container -->
+  <!-- Container for the form -->
   <div id="hubspot-form"></div>
 
   <script>
-    // Log current page URL immediately
-    const currentPageUrl = window.location.href;
-    console.log("🌐 Current page URL:", currentPageUrl);
+    // Immediately log current URL for debugging
+    const pageUrl = window.location.href;
+    console.log("🌐 Current page URL:", pageUrl);
 
+    // Wait until HubSpot library is loaded
     window.addEventListener("load", function () {
       if (typeof hbspt === "undefined" || !hbspt.forms) {
-        console.error("❌ HubSpot library not loaded correctly.");
+        console.error("❌ HubSpot library did not load. Check network or CORS issues.");
         return;
       }
 
       hbspt.forms.create({
         region: "na1",
-        portalId: "45176032",
-        formId: "4a868650-22f3-4bb5-a389-259d208f3973",
+        portalId: "45176032", // your real portal ID
+        formId: "4a868650-22f3-4bb5-a389-259d208f3973", // your real form ID
         target: "#hubspot-form",
 
-        onFormReady: function () {
-          console.log("✅ HubSpot form loaded.");
+        onFormReady: function ($form) {
+          console.log("✅ HubSpot form ready, attempting to fill lien_residence...");
 
-          function checkAndFillField() {
-            const field = document.querySelector('input[name*="lien_residence"]');
-
-            if (!field) {
+          // Function to find and fill lien_residence field
+          function fillLienResidence() {
+            // Works with both modern HS naming like 0-1/lien_residence and plain lien_residence
+            const input = $form.find('input[name*="0-1/lien_residence"]');
+            if (!input.length) {
               console.warn("⚠️ Field 'lien_residence' not found yet.");
               return false;
             }
 
-            if (field.value === "") {
-              field.value = currentPageUrl;
-              console.log("✏️ Field found but empty — filled with:", field.value);
-              return true;
+            if (input.val() === "") {
+              input.val(pageUrl).change();
+              console.log("✏️ Field 'lien_residence' filled with:", pageUrl);
             } else {
-              console.log("✅ Field already filled with:", field.value);
-              return true;
+              console.log("✅ Field 'lien_residence' already contains:", input.val());
             }
+            return true;
           }
 
-          // Retry up to 10 times if not found or still empty
+          // Retry up to 10 times in case the field renders slowly
           let attempts = 0;
-          const retryInterval = setInterval(() => {
+          const interval = setInterval(() => {
             attempts++;
             console.log(`🔄 Attempt ${attempts} to fill field...`);
-
-            if (checkAndFillField() || attempts >= 10) {
-              clearInterval(retryInterval);
-              console.log("🟢 Finished checking after", attempts, "attempt(s).");
+            if (fillLienResidence() || attempts >= 10) {
+              clearInterval(interval);
+              console.log("🟢 Done checking after", attempts, "attempt(s).");
             }
           }, 500);
 
-          // Final safety: ensure latest value before form submission
-          const formElement = document.querySelector("#hubspot-form form");
-          if (formElement) {
-            formElement.addEventListener("submit", function () {
-              checkAndFillField();
-            });
-          }
-        },
+          // Ensure latest value before submit
+          $form.on("submit", function () {
+            fillLienResidence();
+          });
+        }
       });
     });
   </script>
