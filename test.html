@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulaire HubSpot - URL automatique</title>
+
+  <!-- HubSpot official embed -->
+  <script src="https://js.hsforms.net/forms/v2.js"></script>
+</head>
+
+<body>
+  <h1>Contact</h1>
+  <p>Le champ caché <code>lien_residence</code> sera automatiquement rempli avec l’URL de cette page.</p>
+
+  <!-- HubSpot Form Container -->
+  <div id="hubspot-form"></div>
+
+  <script>
+    // Load and create HubSpot form
+    hbspt.forms.create({
+      region: "na1",
+      portalId: "45176032",
+      formId: "4a868650-22f3-4bb5-a389-259d208f3973",
+      target: "#hubspot-form"
+    });
+
+    // Listen for HubSpot form ready event
+    window.addEventListener("message", function(event) {
+      if (event.data && event.data.type === "hsFormCallback" && event.data.eventName === "onFormReady") {
+        // Locate the rendered form by its HubSpot-assigned ID
+        const form = document.querySelector(`#${event.data.id}`);
+        if (form) {
+          const lienField = form.querySelector('input[name="lien_residence"]');
+          if (lienField) {
+            lienField.value = window.location.href;
+            console.log("Lien résidence rempli :", lienField.value);
+          } else {
+            console.warn("Champ 'lien_residence' introuvable dans le formulaire.");
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
