@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HubSpot Form Debugger</title>
+
+  <!-- Load HubSpot Forms v2 library -->
+  <script src="https://js.hsforms.net/forms/v2.js"></script>
+</head>
+
+<body>
+  <h1>Debug HubSpot Form Fields</h1>
+  <p>All form fields will be listed in the console once the form is loaded.</p>
+
+  <div id="hubspot-form"></div>
+
+  <script>
+    const currentPageUrl = window.location.href;
+    console.log("🌐 Current page URL:", currentPageUrl);
+
+    window.addEventListener("load", function() {
+      if (typeof hbspt === "undefined" || !hbspt.forms) {
+        console.error("❌ HubSpot library not loaded correctly or form blocked (403 likely).");
+        return;
+      }
+
+      hbspt.forms.create({
+        region: "na1",
+        portalId: "45176032",
+        formId: "4a868650-22f3-4bb5-a389-259d208f3973",
+        target: "#hubspot-form",
+
+        onFormReady: function() {
+          console.log("✅ HubSpot form loaded successfully. Listing all input fields...");
+
+          function listAllInputs() {
+            const inputs = document.querySelectorAll("#hubspot-form input");
+            if (!inputs.length) {
+              console.warn("⚠️ No inputs found in DOM yet — form may not have rendered fully.");
+              return false;
+            }
+
+            console.group("📋 All HubSpot form input fields:");
+            inputs.forEach((el, index) => {
+              console.log(`${index + 1}. name="${el.name}" | type="${el.type}" | value="${el.value}"`);
+            });
+            console.groupEnd();
+
+            return true;
+          }
+
+          // Retry a few times if the DOM is still rendering
+          let tries = 0;
+          const interval = setInterval(() => {
+            tries++;
+            if (listAllInputs() || tries > 10) clearInterval(interval);
+          }, 500);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
